@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZAP Server</title>
+    <style>
+      body {
+        background-color: black;
+        color: #00ff00;
+        font-family: "Courier New", Courier, monospace;
+        padding: 1rem;
+        margin: 0;
+        white-space: pre-wrap;
+      }
+      .cursor {
+        display: inline-block;
+        width: 10px;
+        height: 1em;
+        background-color: #00ff00;
+        margin-left: 2px;
+        vertical-align: baseline;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        0%,
+        50% {
+          opacity: 1;
+        }
+        50.01%,
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="terminal"></div>
+
+    <script>
+      const terminal = document.getElementById("terminal");
+
+      function getServerTime() {
+        const now = new Date();
+        const date = now.toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+        const time = now.toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        return `🕒 Server Time: ${date} – ${time};`;
+      }
+
+      const bootMessages = [
+        "Initializing ZAP Server v1.0...",
+        "Loading core modules..................",
+        "Connecting to database........ OK",
+        "Checking API endpoints... OK",
+        "Verifying security protocols... OK",
+        "Starting background services...... OK",
+        "Allocating memory... OK",
+        "Server boot sequence complete.",
+        "------------------------------------------------",
+        "💻 ZAP Server Status: ✅ Running smoothly",
+        getServerTime(),
+        "------------------------------------------------",
+      ];
+
+      let line = 0;
+      let timeLineIndex = bootMessages.length - 2;
+
+      function typeLine() {
+        if (line < bootMessages.length) {
+          const lineElem = document.createElement("div");
+          lineElem.textContent = bootMessages[line];
+          terminal.appendChild(lineElem);
+          line++;
+          setTimeout(typeLine, 200);
+        } else {
+          const cursor = document.createElement("span");
+          cursor.classList.add("cursor");
+          terminal.lastElementChild.appendChild(cursor);
+
+          setInterval(() => {
+            terminal.children[timeLineIndex].firstChild.textContent =
+              getServerTime();
+          }, 1000);
+        }
+      }
+
+      typeLine();
+    </script>
+  </body>
+</html>
