@@ -58,7 +58,8 @@ export default function EditBanner(data: Banner) {
       setTimeout(() => {
         window.location.href = "/banners";
       }, 1000);
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"
@@ -79,11 +80,10 @@ export default function EditBanner(data: Banner) {
       setTimeout(() => {
         window.location.href = "/banners";
       }, 1000);
-    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       console.log("Error during delete operation:", err);
-      toast.error(
-        error.response?.data?.message || "Error!! Details in Console"
-      );
+      toast.error(err.response?.data?.message || "Error!! Details in Console");
     }
   };
 

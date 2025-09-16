@@ -67,7 +67,8 @@ export default function AddBanners() {
       setTimeout(() => {
         window.location.href = "/banners";
       }, 1000);
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"

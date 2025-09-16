@@ -43,10 +43,11 @@ export function LoginForm() {
     try {
       setIsSubmitting(true);
       const res = await API.post("/api/auth/admin", values);
-      const message = res.message;
+      const message = res.data.message;
       toast.success(message);
       navigate({ to: "/products" });
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"
