@@ -24,7 +24,8 @@ function RouteComponent() {
       try {
         const response: Category[] = await getData();
         setData(response);
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.log("error fetching data", error);
         toast.error(error.response?.data?.message || "reload Page");
       }

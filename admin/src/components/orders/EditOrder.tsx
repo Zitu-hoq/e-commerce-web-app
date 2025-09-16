@@ -1,4 +1,6 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -142,7 +144,9 @@ export default function EditForm({ data }: OrderSheetProps) {
   const [comment, setComment] = useState("");
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const orderId = data._id;
-  const [date, setDate] = useState(data.deliveryDate);
+  const [date, setDate] = useState<Date>(
+    data.deliveryDate ? new Date(data.deliveryDate) : new Date()
+  );
 
   const handleDelete = async () => {
     setLoading(true);
@@ -152,7 +156,7 @@ export default function EditForm({ data }: OrderSheetProps) {
       });
       const message = res.data.message;
       toast.success(message);
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to delete orders");
     } finally {
       setLoading(false);
@@ -186,7 +190,7 @@ export default function EditForm({ data }: OrderSheetProps) {
       });
       const message = res.data.message;
       toast.success(message);
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to delete orders");
     } finally {
       setLoading(false);
@@ -222,7 +226,7 @@ export default function EditForm({ data }: OrderSheetProps) {
       const res = await API.put("/api/admin/order/edit", { orderId, updates });
       const message = res.data.message;
       toast.success(message);
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to update order");
     } finally {
       setLoading(false);

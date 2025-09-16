@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { API } from "@/api/server";
 import { Button } from "@/components/ui/button";
@@ -55,7 +56,7 @@ export function EditImg({
       setTimeout(() => {
         window.location.href = "/products";
       }, 1000);
-    } catch (error) {
+    } catch (error: any) {
       console.log("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"
@@ -81,7 +82,7 @@ export function EditImg({
       setTimeout(() => {
         window.location.href = "/products";
       }, 1000);
-    } catch (error) {
+    } catch (error: any) {
       console.log("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"

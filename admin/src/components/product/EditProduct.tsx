@@ -1,4 +1,6 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { API } from "@/api/server";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,7 +55,7 @@ export default function EditProduct(data: Product) {
       setTimeout(() => {
         window.location.href = "/products";
       }, 1000);
-    } catch (error) {
+    } catch (error: any) {
       console.log("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"
@@ -72,11 +74,9 @@ export default function EditProduct(data: Product) {
       setTimeout(() => {
         window.location.href = "/products";
       }, 1000);
-    } catch (err) {
+    } catch (err: any) {
       console.log("Error during delete operation:", err);
-      toast.error(
-        error.response?.data?.message || "Error!! Details in Console"
-      );
+      toast.error(err.response?.data?.message || "Error!! Details in Console");
     }
   };
 
@@ -138,7 +138,11 @@ export default function EditProduct(data: Product) {
                       const oldPrice = form.getValues("oldPrice");
 
                       // Calculate discount percentage
-                      if (oldPrice > 0 && numericValue > 0) {
+                      if (
+                        typeof oldPrice === "number" &&
+                        oldPrice > 0 &&
+                        numericValue > 0
+                      ) {
                         const discount =
                           ((oldPrice - numericValue) / oldPrice) * 100;
                         form.setValue("discount", Number(Math.ceil(discount))); // Set discount with 2 decimal places

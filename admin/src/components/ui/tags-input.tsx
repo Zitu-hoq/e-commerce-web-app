@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -85,6 +86,8 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
         const tags = e.clipboardData.getData("text").split(SPLITTER_REGEX);
         const newValue = [...value];
         tags.forEach((item) => {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
           const parsedItem = item.replaceAll(FORMATTING_REGEX, "").trim();
           if (
             parsedItem.length > 0 &&

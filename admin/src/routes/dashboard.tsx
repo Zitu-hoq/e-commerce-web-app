@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API } from "@/api/server";
 import { CardBuilder } from "@/components/dashboard/CardBuilder";
 import { DasboardSkeleton } from "@/components/dashboard/DashboardSkeleton";
@@ -18,7 +19,7 @@ async function getData() {
 }
 
 function Dashboard() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -27,7 +28,7 @@ function Dashboard() {
       try {
         const response = await getData();
         setData(response);
-      } catch (error) {
+      } catch (error: any) {
         console.log("error fetching data", error);
         toast({
           variant: "destructive",

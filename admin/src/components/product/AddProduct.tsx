@@ -1,4 +1,6 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { API } from "@/api/server";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,7 +49,11 @@ const formSchema = z.object({
   size: z.array(z.string()).nonempty("Please at least one item"),
 });
 
-export default function AddProduct({ baseCategories }: Category[]) {
+export default function AddProduct({
+  baseCategories,
+}: {
+  baseCategories: Category[];
+}) {
   const [files, setFiles] = useState<File[] | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -103,7 +109,7 @@ export default function AddProduct({ baseCategories }: Category[]) {
       const message = res.data.message;
       toast.success(message);
       navigate({ to: "/products" });
-    } catch (error) {
+    } catch (error: any) {
       console.log("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"

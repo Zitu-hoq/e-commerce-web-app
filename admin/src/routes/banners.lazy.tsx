@@ -27,7 +27,8 @@ function RouteComponent() {
       try {
         const res: Banner[] = await getData();
         setData(res);
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         toast({
           variant: "destructive",
           title: "Error Fetching Banners!!!",

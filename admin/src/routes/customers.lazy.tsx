@@ -26,7 +26,8 @@ function RouteComponent() {
       try {
         const response = await getData();
         setData(response);
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.log("error fetching data", error);
         toast({
           variant: "destructive",

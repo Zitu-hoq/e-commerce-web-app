@@ -54,6 +54,7 @@ export type Order = {
   paidAmount?: number;
   __v?: number;
   createdAt: string;
+  updatedAt?: string;
   adminComment?: string;
   paymentId?: string;
 };
@@ -61,7 +62,7 @@ export type Order = {
 export type DashboardCardProps = {
   title: string;
   primary: number;
-  secondary: number;
+  secondary?: number;
   paint: string;
 };
 

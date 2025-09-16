@@ -48,7 +48,11 @@ export default function EditBanner(data: Banner) {
       setIsSubmitting(true);
       console.log(values);
       const distinct = Object.fromEntries(
-        Object.entries(values).filter(([key, val]) => val !== data[key])
+        Object.entries(values).filter(
+          (
+            [key, val] // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ) => val !== (data as any)[key]
+        )
       );
       const formData = { ...distinct, _id: data._id };
 

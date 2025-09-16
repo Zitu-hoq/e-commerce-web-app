@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import {
   Table,
   TableBody,
@@ -7,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export function UserTable({ users }) {
+export function UserTable({ users }: any) {
   console.log(users);
   return (
     <Table>
@@ -21,7 +23,7 @@ export function UserTable({ users }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => (
+        {users.map((user: any) => (
           <TableRow key={user._id}>
             <TableCell className="font-medium">{user.name}</TableCell>
             <TableCell className="italic">{user.email}</TableCell>

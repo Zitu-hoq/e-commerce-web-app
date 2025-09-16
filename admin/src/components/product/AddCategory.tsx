@@ -1,4 +1,6 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { API } from "@/api/server";
 import {
   Form,
@@ -33,7 +35,11 @@ const formSchema = z.object({
   __v: z.number().optional(),
 });
 
-export default function AddCategory({ preData }: Category[]) {
+interface AddCategoryProps {
+  preData: Category[];
+}
+
+export default function AddCategory({ preData }: AddCategoryProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,7 +71,7 @@ export default function AddCategory({ preData }: Category[]) {
       setTimeout(() => {
         window.location.href = "/addProduct";
       }, 1000);
-    } catch (error) {
+    } catch (error: any) {
       console.log("Form submission error", error);
       toast.error(
         error.response?.data?.message || "Error!! Details in Console"

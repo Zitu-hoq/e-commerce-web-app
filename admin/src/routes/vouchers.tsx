@@ -40,7 +40,8 @@ function RouteComponent() {
       try {
         const response: Voucher[] = await getData();
         setVouchers(response);
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         console.log("error fetching data", error);
         toast.error(
           error.response.data.message || "Error Fetching Products!!!"
