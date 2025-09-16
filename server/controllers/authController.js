@@ -151,6 +151,7 @@ const adminAuth = async (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: "None",
+        maxAge: 30 * 60 * 1000,
       })
       .json({ success: true, message: "special login successful." });
   } catch (error) {
@@ -237,6 +238,7 @@ const loginUser = async (req, res) => {
         httpOnly: true,
         secure: true,
         sameSite: "None",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .json({ success: true, message: "Login successful.", user: user });
   } catch (err) {
