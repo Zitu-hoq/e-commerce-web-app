@@ -37,8 +37,7 @@ export default function Layout({ children, pageName }: AppProps) {
     };
 
     if (loggedIn === null) fetchUser();
-    else setLoading(false);
-  }, [loggedIn]);
+  }, []);
 
   useEffect(() => {
     if (loggedIn === false && !loading) {
