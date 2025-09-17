@@ -1,6 +1,7 @@
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { API } from "./api/server";
 import { CustomTrigger } from "./components/sidebar/customTrigger";
 import { Toaster } from "./components/ui/sonner";
 import { AppProps } from "./types";
@@ -10,6 +11,12 @@ export default function Layout({ children, pageName }: AppProps) {
     const savedState = localStorage.getItem("sidebarOpen");
     return savedState ? JSON.parse(savedState) : true;
   });
+
+  useEffect(() => {
+    API.get("/auth/me")
+      .then((res) => console.log(res.data.user))
+      .catch(() => console.log("error"));
+  }, []);
 
   // Function to handle the button click
   const handleToggle = () => {
