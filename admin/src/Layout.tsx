@@ -30,9 +30,9 @@ export default function Layout({ children, pageName }: AppProps) {
         sessionStorage.setItem("loggedIn", JSON.stringify(res.data.success));
       } catch {
         setLoggedIn(false);
+        sessionStorage.setItem("loggedIn", "false");
         toast.error("You must log in");
         navigate({ to: "/" });
-        sessionStorage.setItem("loggedIn", "false");
       } finally {
         setLoading(false);
       }
