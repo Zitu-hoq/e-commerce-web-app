@@ -40,7 +40,7 @@ export default function Layout({ children, pageName }: AppProps) {
   }, []);
 
   useEffect(() => {
-    if (loggedIn === false && !loading) {
+    if (!loading && loggedIn === false) {
       toast.error("You must log in");
       navigate({ to: "/" });
     }
