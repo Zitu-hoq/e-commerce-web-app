@@ -26,30 +26,31 @@ export function WaveformLoader({
   };
 
   return (
-    <div
-      className={cn(
-        "flex items-center justify-center",
-        containerSizeClasses[size],
-        className
-      )}
-    >
-      {Array.from({ length: barCount }).map((_, index) => (
-        <div
-          key={index}
-          className={cn(
-            "bg-green-500 dark:bg-blue-500 rounded-full animate-pulse origin-center",
-            sizeClasses[size]
-          )}
-          style={{
-            animation: `waveform 1.2s ease-in-out infinite`,
-            animationDelay: `${index * 0.1}s`,
-            transformOrigin: "center",
-          }}
-        />
-      ))}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <div
+        className={cn(
+          "flex items-center justify-center",
+          containerSizeClasses[size],
+          className
+        )}
+      >
+        {Array.from({ length: barCount }).map((_, index) => (
+          <div
+            key={index}
+            className={cn(
+              "bg-green-500 dark:bg-blue-500 rounded-full animate-pulse origin-center",
+              sizeClasses[size]
+            )}
+            style={{
+              animation: `waveform 1.2s ease-in-out infinite`,
+              animationDelay: `${index * 0.1}s`,
+              transformOrigin: "center",
+            }}
+          />
+        ))}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
           @keyframes waveform {
             0%, 40%, 100% {
               transform: scaleY(0.4);
@@ -59,8 +60,9 @@ export function WaveformLoader({
             }
           }
         `,
-        }}
-      />
+          }}
+        />
+      </div>
     </div>
   );
 }

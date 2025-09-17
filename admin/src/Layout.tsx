@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { API } from "./api/server";
@@ -13,37 +14,40 @@ export default function Layout({ children, pageName }: AppProps) {
     const savedState = localStorage.getItem("sidebarOpen");
     return savedState ? JSON.parse(savedState) : true;
   });
+  const navigate = useNavigate();
+
   const [loggedIn, setLoggedIn] = useState<boolean | null>(() => {
     const cached = sessionStorage.getItem("loggedIn");
     return cached ? JSON.parse(cached) : null;
   });
   const [loading, setLoading] = useState(loggedIn === null);
+
   useEffect(() => {
-    const fetchUser = async () =>
-      await API.get("/api/auth/me")
-        .then((res) => {
-          setLoggedIn(res.data.success);
-          sessionStorage.setItem("loggedIn", JSON.stringify(res.data.success));
-        })
-        .catch(() => {
-          setLoggedIn(false);
-          sessionStorage.setItem("loggedIn", "false");
-        })
-        .finally(() => setLoading(false));
+    const fetchUser = async () => {
+      try {
+        const res = await API.get("/api/auth/me");
+        setLoggedIn(res.data.success);
+        sessionStorage.setItem("loggedIn", JSON.stringify(res.data.success));
+      } catch {
+        setLoggedIn(false);
+        sessionStorage.setItem("loggedIn", "false");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (loggedIn === null) fetchUser();
     else setLoading(false);
   }, [loggedIn]);
 
-  if (loading)
-    return (
-      <div className="text-center space-y-4">
-        <WaveformLoader size="lg" barCount={7} />
-      </div>
-    );
-  if (!loggedIn) {
-    toast.error("You must log in");
-    window.location.href = "/";
-  }
+  useEffect(() => {
+    if (loggedIn === false && !loading) {
+      toast.error("You must log in");
+      navigate({ to: "/" });
+    }
+  }, [loggedIn, loading, navigate]);
+
+  if (loading) return <WaveformLoader size="lg" barCount={7} />;
 
   // Function to handle the button click
   const handleToggle = () => {
