@@ -1,6 +1,7 @@
 import { API } from "@/api/server";
 import AddBanners from "@/components/banners/AddBanners";
 import { BannerCard } from "@/components/banners/BannerCard";
+import { WaveformLoader } from "@/components/WaveformLoader";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/Layout";
 import { Banner } from "@/types";
@@ -50,9 +51,11 @@ function RouteComponent() {
           <AddBanners />
         </div>
         <div>
-          {isLoading
-            ? "loading...."
-            : data.map((banner) => <BannerCard key={banner._id} {...banner} />)}
+          {isLoading ? (
+            <WaveformLoader size="lg" barCount={7} />
+          ) : (
+            data.map((banner) => <BannerCard key={banner._id} {...banner} />)
+          )}
         </div>
       </Layout>
     </>

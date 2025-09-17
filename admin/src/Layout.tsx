@@ -4,7 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { API } from "./api/server";
-import { WaveformLoader } from "./components/Loader";
+import { WaveformLoader } from "./components/WaveformLoader";
 import { CustomTrigger } from "./components/sidebar/customTrigger";
 import { Toaster } from "./components/ui/sonner";
 import { AppProps } from "./types";
@@ -39,6 +39,10 @@ export default function Layout({ children, pageName }: AppProps) {
     };
 
     if (loggedIn === null) fetchUser();
+    if (loggedIn === false) {
+      toast.error("You must log in");
+      navigate({ to: "/" });
+    }
   }, []);
 
   if (loading) return <WaveformLoader size="lg" barCount={7} />;
