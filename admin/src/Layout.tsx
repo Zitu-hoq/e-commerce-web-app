@@ -30,6 +30,8 @@ export default function Layout({ children, pageName }: AppProps) {
         sessionStorage.setItem("loggedIn", JSON.stringify(res.data.success));
       } catch {
         setLoggedIn(false);
+        toast.error("You must log in");
+        navigate({ to: "/" });
         sessionStorage.setItem("loggedIn", "false");
       } finally {
         setLoading(false);
@@ -38,13 +40,6 @@ export default function Layout({ children, pageName }: AppProps) {
 
     if (loggedIn === null) fetchUser();
   }, []);
-
-  useEffect(() => {
-    if (!loading && loggedIn === false) {
-      toast.error("You must log in");
-      navigate({ to: "/" });
-    }
-  }, [loggedIn, loading, navigate]);
 
   if (loading) return <WaveformLoader size="lg" barCount={7} />;
 
