@@ -1,6 +1,7 @@
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { API } from "./api/server";
 import { CustomTrigger } from "./components/sidebar/customTrigger";
 import { Toaster } from "./components/ui/sonner";
@@ -11,12 +12,23 @@ export default function Layout({ children, pageName }: AppProps) {
     const savedState = localStorage.getItem("sidebarOpen");
     return savedState ? JSON.parse(savedState) : true;
   });
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    API.get("/auth/me")
-      .then((res) => console.log(res.data.user))
-      .catch(() => console.log("error"));
+    const fetchUser = async () =>
+      await API.get("/api/auth/me")
+        .then((res) => setLoggedIn(res.data.success))
+        .catch(() => setLoggedIn(false))
+        .finally(() => setLoading(false));
+    fetchUser();
   }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (!loggedIn) {
+    toast.error("You must log in");
+    window.location.href = "/";
+  }
 
   // Function to handle the button click
   const handleToggle = () => {
