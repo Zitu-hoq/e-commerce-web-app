@@ -3,6 +3,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { API } from "./api/server";
+import { WaveformLoader } from "./components/Loader";
 import { CustomTrigger } from "./components/sidebar/customTrigger";
 import { Toaster } from "./components/ui/sonner";
 import { AppProps } from "./types";
@@ -12,19 +13,33 @@ export default function Layout({ children, pageName }: AppProps) {
     const savedState = localStorage.getItem("sidebarOpen");
     return savedState ? JSON.parse(savedState) : true;
   });
-  const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState(true);
-
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(() => {
+    const cached = sessionStorage.getItem("loggedIn");
+    return cached ? JSON.parse(cached) : null;
+  });
+  const [loading, setLoading] = useState(loggedIn === null);
   useEffect(() => {
     const fetchUser = async () =>
       await API.get("/api/auth/me")
-        .then((res) => setLoggedIn(res.data.success))
-        .catch(() => setLoggedIn(false))
+        .then((res) => {
+          setLoggedIn(res.data.success);
+          sessionStorage.setItem("loggedIn", JSON.stringify(res.data.success));
+        })
+        .catch(() => {
+          setLoggedIn(false);
+          sessionStorage.setItem("loggedIn", "false");
+        })
         .finally(() => setLoading(false));
-    fetchUser();
-  }, []);
+    if (loggedIn === null) fetchUser();
+    else setLoading(false);
+  }, [loggedIn]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="text-center space-y-4">
+        <WaveformLoader size="lg" barCount={7} />
+      </div>
+    );
   if (!loggedIn) {
     toast.error("You must log in");
     window.location.href = "/";
