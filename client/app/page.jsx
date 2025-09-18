@@ -17,6 +17,7 @@ export default function Home() {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
+    console.log(fetched);
     // Only fetch if not already loaded (optional optimization)
     if (!fetched) {
       dispatch(fetchProducts());
