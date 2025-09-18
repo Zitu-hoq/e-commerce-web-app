@@ -5,6 +5,7 @@ export const getAllProducts = async () => {
   try {
     const res = await axios.get("/api/public/products");
     // res.data contains page number
+    console.log(res.data.products);
     return res.data.products;
   } catch (err) {
     toast.error(err.response?.data?.message || "error fetching products");
