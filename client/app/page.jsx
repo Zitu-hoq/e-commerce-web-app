@@ -18,11 +18,10 @@ export default function Home() {
 
   useEffect(() => {
     console.log(fetched);
-    // Only fetch if not already loaded (optional optimization)
-    if (!fetched) {
+    if (!fetched || products.length === 0) {
       dispatch(fetchProducts());
     }
-  }, [dispatch, fetched]);
+  }, [dispatch, fetched, products.length]);
 
   useEffect(() => {
     const callBannerApi = async () => {
@@ -43,10 +42,13 @@ export default function Home() {
           {banners && <BannerCarousel banners={banners} />}
         </div>
         <div className="flex">
-          {products &&
+          {products ? (
             products.map((product) => (
               <ProductCard key={product._id} product={product} />
-            ))}
+            ))
+          ) : (
+            <h1>No products found</h1>
+          )}
         </div>
       </main>
     </div>
