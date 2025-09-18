@@ -39,12 +39,13 @@ export default function Home() {
       <Navbar isLoggedIn={isLoggedIn} />
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8" style={{ height: "60vh" }}>
-          <BannerCarousel banners={banners} />
+          {banners && <BannerCarousel banners={banners} />}
         </div>
         <div className="flex">
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+          {products &&
+            products.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
         </div>
       </main>
     </div>
