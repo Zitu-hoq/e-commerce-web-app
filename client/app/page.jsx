@@ -11,9 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Home() {
   const dispatch = useDispatch();
   const { isLoggedIn, user } = useSelector((state) => state.auth);
-  const { products, loading, error, fetched } = useSelector(
-    (state) => state.products
-  );
+  const {
+    products = [],
+    loading,
+    error,
+    fetched,
+  } = useSelector((state) => state.products || {});
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
