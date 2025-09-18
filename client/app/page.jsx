@@ -20,7 +20,6 @@ export default function Home() {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    console.log(fetched);
     if (!fetched || products.length === 0) {
       dispatch(fetchProducts());
     }
