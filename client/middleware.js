@@ -1,9 +1,9 @@
-// middleware.js
-import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 export function middleware(req) {
-  const nonce = crypto.randomBytes(16).toString("base64");
+  const array = new Uint8Array(16);
+  crypto.getRandomValues(array);
+  const nonce = Buffer.from(array).toString("base64");
 
   const cspHeader = `
     default-src 'self';
