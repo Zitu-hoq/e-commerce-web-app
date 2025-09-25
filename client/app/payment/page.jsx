@@ -23,6 +23,11 @@ export default function PaymentPage() {
 
   const defaultAddress = user.addresses.find((address) => address.isDefault);
 
+  if (!defaultAddress) {
+    toast.error("Please add an default address First!!!");
+    router.push("/profile/address");
+  }
+
   const [products, setProducts] = useState([]);
   const [coupon, setCoupon] = useState("");
   const [prevRoute, setRoute] = useState("");
