@@ -1,7 +1,6 @@
 import ClientLayout from "@/components/ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
 import { Inter } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -12,7 +11,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const nonce = headers().get("x-nonce") || undefined;
   return (
     <html lang="en" className="dark">
       <body
