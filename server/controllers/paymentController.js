@@ -80,7 +80,11 @@ const handlePayment = async (req, res) => {
     }
 
     //optional
-    return res.status(200).json({ message: "payment successful" });
+    return res
+      .status(200)
+      .json({
+        message: "payment method unavailable! Please select another one.",
+      });
   } catch (error) {
     console.log("handle-payment-error");
     return res.status(400).json({ message: error.message, error });
