@@ -24,7 +24,9 @@ export function PaymentOption({ orderId, handleCancel }) {
     } else {
       // COD / Mobile Banking
       await paymentAPI(orderId, value);
-      window.location.href = "/profile/orders";
+      setTimeout(() => {
+        window.location.href = "/profile/orders";
+      }, 1500);
     }
   };
   const cancelPaymentAttept = async () => {

@@ -41,7 +41,9 @@ function CheckoutForm({ clientSecret, amount }) {
       setMessage("❌ Payment failed: " + result.error.message);
     } else if (result.paymentIntent.status === "succeeded") {
       setMessage("✅ Payment successful! 🎉");
-      window.location.href = "/";
+      setTimeout(() => {
+        window.location.href = "/profile/orders";
+      }, 1500);
     }
   };
 
