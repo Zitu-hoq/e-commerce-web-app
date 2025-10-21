@@ -24,7 +24,7 @@ export default function Home() {
     console.log("use effct triggerd");
     const now = Date.now();
     const refreshAfter = 5 * 60 * 1000;
-    const refreshAt = lastFetched && now - lastFetched > refreshAfter;
+    const refreshAt = !lastFetched || now - lastFetched > refreshAfter;
     console.log(!fetched, products.length, refreshAt);
     if (!fetched || products.length === 0 || refreshAt) {
       console.log("dispatching...");
