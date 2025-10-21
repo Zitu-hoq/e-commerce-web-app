@@ -21,13 +21,10 @@ export default function Home() {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    console.log("use effct triggerd");
     const now = Date.now();
     const refreshAfter = 5 * 60 * 1000;
     const refreshAt = !lastFetched || now - lastFetched > refreshAfter;
-    console.log(!fetched, products.length, refreshAt);
     if (!fetched || products.length === 0 || refreshAt) {
-      console.log("dispatching...");
       dispatch(fetchProducts());
     }
   }, [dispatch, fetched, products.length, lastFetched]);
@@ -50,7 +47,7 @@ export default function Home() {
         <div className="mb-8" style={{ height: "60vh" }}>
           {banners && <BannerCarousel banners={banners} />}
         </div>
-        <div className="flex">
+        <div className="flex flex-wrap justify-between">
           {products ? (
             products.map((product) => (
               <ProductCard key={product._id} product={product} />

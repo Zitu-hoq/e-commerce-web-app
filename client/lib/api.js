@@ -4,7 +4,6 @@ import axios from "./axios";
 export const getAllProducts = async () => {
   try {
     const res = await axios.get("/api/public/products");
-    console.log(res.data.products);
     // res.data contains page number
     return res.data.products;
   } catch (err) {
