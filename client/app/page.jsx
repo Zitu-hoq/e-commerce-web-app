@@ -16,14 +16,18 @@ export default function Home() {
     loading,
     error,
     fetched,
+    lastFetched,
   } = useSelector((state) => state.products || {});
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    if (!fetched || products.length === 0) {
+    const now = Date.now();
+    const refreshAfter = 5 * 60 * 1000;
+    const refreshAt = lastFetched && now - lastFetched > refreshAfter;
+    if (!fetched || products.length === 0 || refreshAt) {
       dispatch(fetchProducts());
     }
-  }, [dispatch, fetched, products.length]);
+  }, [dispatch, fetched, products.length, lastFetched]);
 
   useEffect(() => {
     const callBannerApi = async () => {

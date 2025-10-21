@@ -20,6 +20,7 @@ const initialState = {
   loading: false,
   error: null,
   fetched: false,
+  lastFetched: null,
 };
 
 const productSlice = createSlice({
@@ -36,6 +37,7 @@ const productSlice = createSlice({
         state.loading = false;
         state.products = action.payload;
         state.fetched = true;
+        state.lastFetched = Date.now();
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
