@@ -5,6 +5,7 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, thunkAPI) => {
     try {
+      console.log("thunk api called");
       const data = await getAllProducts();
       return data;
     } catch (error) {
