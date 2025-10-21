@@ -26,6 +26,7 @@ export default function Home() {
     const refreshAfter = 5 * 60 * 1000;
     const refreshAt = lastFetched && now - lastFetched > refreshAfter;
     if (!fetched || products.length === 0 || refreshAt) {
+      console.log("dispatching...");
       dispatch(fetchProducts());
     }
   }, [dispatch, fetched, products.length, lastFetched]);
